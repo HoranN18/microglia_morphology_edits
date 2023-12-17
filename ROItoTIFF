@@ -1,0 +1,20 @@
+dir = getDirectory("Choose Output Directory ");
+path = File.openDialog("Open your test image");
+		open(path);
+		title = getTitle();
+		
+run("ROI Manager...");
+waitForUser("Select all ROI's you want to be analyzed then press OK");
+
+for (i=0; i<roiManager("count"); ++i) {
+		selectImage(title);
+		roiManager("Select", i);
+		run("Duplicate...", " ");
+		run("Crop");
+    	roiManager("Select", i);
+		setBackgroundColor(0, 0, 0);
+		run("Clear Outside");
+        saveAs("Tiff", dir+i+".tif");
+        close();
+      
+    }
